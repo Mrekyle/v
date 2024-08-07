@@ -1,0 +1,68 @@
+Run migrations...
+python3 manage.py migrate --run-syncdb 
+
+NOTES:
+
+Create Apps for different parts of the applications and move models into correct places
+Meta description place into template tags and allow a meta on each page
+    for recipes/items in a store add a meta description on the model
+    Same thing for page/product titles 
+
+Write testing as I build 
+
+Add summernote
+
+TO DO:
+
+Add enviroment variables 
+
+User Authentication
+    Build user permissions
+    Build User Profile
+
+Build Support hub
+    Feature request
+    General Support
+    Account Problems
+    Recipe Request/Ideas
+    Product Ideas/Requests
+Build recipe creation form
+Build Homepage
+Build recipe display page
+Build Moderator page
+    Recipe
+        CRUD
+        Approval
+    Support
+Build Admin page
+    users
+    Show all databases with access
+    Support
+Build Privacy Policy
+Build Terms and Conditions
+Build Cookie Policy
+
+Build search engine for comparing proteins and verstegen products (OR statements)
+
+Build recipe gallery
+Build Image gallery
+
+Build Costing 
+    Recipe Costing
+    Portion Costing
+    Ingredient Costing
+    GP Calculator
+    Tax Calculator
+
+Set up hosting
+Set up database hosting
+set up email configure
+set up image storage
+
+FUTURE:
+
+Dark Mode
+Add Instagram Intergration
+Build Calories
+    Add calories to models
+    Build Calorie counting 

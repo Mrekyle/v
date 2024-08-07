@@ -1,0 +1,28 @@
+altgraph @ file:///AppleInternal/Library/BuildRoots/860631e9-c1c5-11ee-98ee-b6ef2fd8d87b/Library/Caches/com.apple.xbs/Sources/python3/altgraph-0.17.2-py2.py3-none-any.whl
+asgiref==3.8.1
+bleach==6.1.0
+certifi==2024.6.2
+charset-normalizer==3.3.2
+cloudinary==1.40.0
+crispy-bootstrap5==2024.2
+dj-database-url==2.2.0
+Django==4.2.13
+django-allauth==0.63.3
+django-cloudinary-storage==0.3.0
+django-countries==7.6.1
+django-crispy-forms==2.2
+django-storages==1.14.3
+django-summernote==0.8.20.0
+future @ file:///AppleInternal/Library/BuildRoots/860631e9-c1c5-11ee-98ee-b6ef2fd8d87b/Library/Caches/com.apple.xbs/Sources/python3/future-0.18.2-py3-none-any.whl
+gunicorn==22.0.0
+idna==3.7
+macholib @ file:///AppleInternal/Library/BuildRoots/860631e9-c1c5-11ee-98ee-b6ef2fd8d87b/Library/Caches/com.apple.xbs/Sources/python3/macholib-1.15.2-py2.py3-none-any.whl
+packaging==24.1
+pillow==10.4.0
+psycopg==3.1.19
+requests==2.32.3
+six @ file:///AppleInternal/Library/BuildRoots/860631e9-c1c5-11ee-98ee-b6ef2fd8d87b/Library/Caches/com.apple.xbs/Sources/python3/six-1.15.0-py2.py3-none-any.whl
+sqlparse==0.5.0
+typing_extensions==4.12.2
+urllib3==2.2.2
+webencodings==0.5.1

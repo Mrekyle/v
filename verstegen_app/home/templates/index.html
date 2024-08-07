@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_title %}
+ 
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="">
+        Hello World I am home
+    </div> 
+    <div class="">
+Check out my button
+<a class="btn btn-success" href="{% url 'user_admin' %}">Click me!</a> 
+    </div>
+</section>
+{% endblock %}
+

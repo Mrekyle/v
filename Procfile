@@ -1,0 +1,1 @@
+web: gunicorn verstegen_app.wsgi:application
