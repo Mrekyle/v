@@ -1,0 +1,40 @@
+/* CORE CSS STYLES */
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+    background-color: whitesmoke;
+}
+
+/* MESSAGES/ALERTS/TOAST */
+
+.message-container {
+    position: fixed;
+    top: 72px;
+    right: 15px;
+    z-index: 9999999999;
+}
+
+.custom-alert {
+    overflow: visible;
+}
+
+.toast-capper {
+    height: 5px;
+}
+
+.toast-header {
+    padding-left: 0.6rem;
+    padding-top: 0.6rem;
+}
+
+.toast-body {
+    padding: 0.6rem;
+}
+
+.alert {
+    padding: 0;
+}

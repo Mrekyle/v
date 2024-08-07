@@ -8,11 +8,9 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12">
-            <form class="form" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" name="register" class="btn btn-success">Register</button>
-            </form>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newUserProfileModal">
+                New User
+              </button>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12">
             <p>Total Users {{ count }}</p>
@@ -50,7 +48,9 @@
                         <td>{{ user.email }}</td>
                         <td>{{ user.is_active }}</td>
                         <td>
-                            <a href="{% url 'edit_user' user.id %}">Edit</a>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editUserProfileModal">
+                                Edit Profile
+                              </button>
                             <a href="{% url 'delete_user' user.id %}">Delete</a>
                         </td>
                     </tr>
@@ -59,4 +59,86 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="newUserProfileModal" tabindex="-1" role="dialog" aria-labelledby="editUserProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editUserProfileModalLabel">Add New User</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{ user.username }}</h5>
+      <p class="card-text">Email: {{ user.email }}</p>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editUserProfileModal" data-user-id="{{ user.id }}">
+        Edit Profile
+      </button>
+    </div>
+  </div>
+  {% include 'edit_user_profile_modal.html' %}
+  <script>
+    // Get the modal element
+    var editUserProfileModal = document.getElementById('editUserProfileModal');
+  
+    // Get the form element
+    var editUserProfileForm = document.getElementById('editUserProfileForm');
+  
+    // Get the save button element
+    var saveUserProfileBtn = document.getElementById('saveUserProfileBtn');
+  
+    // Add event listener to the save button
+    saveUserProfileBtn.addEventListener('click', function() {
+      // Prevent the default form submission behavior
+      event.preventDefault();
+  
+      // Get the user ID from the modal data attribute
+      var userId = editUserProfileModal.dataset.userId;
+  
+      // Serialize the form data
+      var formData = new FormData(editUserProfileForm);
+  
+      // Send the form data to the server using AJAX
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/edit_user_profile/' + userId + '/');
+      xhr.send(formData);
+  
+      // Handle the response from the server
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          // Form submission successful, close the modal
+          editUserProfileModal.classList.remove('show');
+          document.body.classList.remove('modal-open');
+          editUserProfileModal.querySelector('.modal-backdrop').remove();
+  
+          // Show success message
+          alert('User profile updated successfully.');
+        } else {
+          // Form submission failed, show error message
+          alert('Failed to update user profile.');
+        }
+      };
+    });
+  
+    // Add event listener to the modal to close it when the cancel button is clicked
+    editUserProfileModal.addEventListener('click', function(event) {
+      if (event.target.matches('.close')) {
+        // Close the modal
+        editUserProfileModal.classList.remove('show');
+        document.body.classList.remove('modal-open');
+        editUserProfileModal.querySelector('.modal-backdrop').remove();
+      }
+    });
+  </script>
 {% endblock %}
