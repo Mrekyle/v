@@ -5,9 +5,58 @@
 {% endblock %}
 
 {% block content %}
-    <form class="form" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" name="register" class="btn btn-success">Register</button>
-    </form>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <form class="form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" name="register" class="btn btn-success">Register</button>
+            </form>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <p>Total Users {{ count }}</p>
+            Admins
+            {% for user in users %}
+                {% if user.role == 1 %}
+                    <p>{{ user.username }}</p>
+                {% endif %}
+            {% endfor %}
+            <hr>
+            <table class="">
+                <th>
+                    <tr>
+                        <td>
+                            <h4>Username</h4>
+                        </td>
+                        <td>
+                            <h4>Role</h4>
+                        </td>
+                        <td>
+                            <h4>Email</h4>
+                        </td>
+                        <td>
+                            <h4>Status</h4>
+                        </td>
+                        <td>
+                            <h4>Edit/Delete</h4>
+                        </td>
+                    </tr>
+                </th>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{% if user.role == 1 %} Admin {% elif user.role == 2 %} Staff {% elif user.role == 3 %} Butcher {% elif user.role == 4 %} User {% endif %}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.is_active }}</td>
+                        <td>
+                            <a href="{% url 'edit_user' user.id %}">Edit</a>
+                            <a href="{% url 'delete_user' user.id %}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock %}

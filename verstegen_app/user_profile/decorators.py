@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.contrib import messages
 
 
 
@@ -11,6 +12,7 @@ def unauthenticated_user(view_func):
         if request.user.is_authenticated:
             return redirect('home')
         else:
+            messages.info(request, f'Please login to use the Verstegen.app')
             return view_func(request, *args, **kwargs)
         
     return wrapper_func
@@ -46,9 +48,14 @@ def admin_only(view_func):
             group = request.user.group.all()[0].name
 
         if group == 'butcher':
+            messages.error(request, 'You do not have permission to view this page')
             return redirect('butcher')
-        elif group == 'moderator':
-            return redirect('moderator')
+        elif group == 'staff':
+            messages.error(request, 'You do not have permission to view this page')
+            return redirect('staff')
+        elif group == 'user':
+            messages.error(request, 'You do not have permission to view this page')
+            return redirect('user')
         
         if group == 'admin':
             return view_func(request, *args, **kwargs)

@@ -37,15 +37,29 @@
         <title>Verstegen.app {% block extra_title %} {% endblock %}</title>
     </head>
     <body>
-        {% if landing %}
-             
-        {% else %}
-            NAVIGATION
-                <p class=""> &copy; <script>document.write(new Date().getFullYear())</script> Verstegen.app | Designed & built with love by Kyle Chart</p>
-        {% endif %}    
         <main>
             <section>
                 <div>
+
+                    <!-- MESSAGES  -->
+
+                    <div class="message-container">
+                        {% for message in messages %}
+                            {% with message.level as level %}
+                                {% if level == 40 %}
+                                    {% include 'includes/toasts/toast_error.html' %}
+                                {% elif level == 30 %}
+                                    {% include 'includes/toasts/toast_warning.html' %}
+                                {% elif level == 25 %}
+                                    {% include 'includes/toasts/toast_success.html' %}
+                                {% else %}
+                                    {% include 'includes/toasts/toast_info.html' %}
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- CORE CONTENT -->
 
                     {% if landing %}
                         {% block landing %}
@@ -53,13 +67,17 @@
                         {% endblock %}
                     {% else %}
                         {% block content %}
-
+                            NAVIGATION PANEL
+                            <p class=""> &copy; <script>document.write(new Date().getFullYear())</script> Verstegen.app | Designed & built with love by Kyle Chart</p>
                         {% endblock %}
 
                     {% endif %}
                 </div>
             </section>
         </main>
+
+        <!-- LANDING FOOTER  -->
+
         {% if landing %}
             <div class="footer">
                 <p class=""> &copy; <script>document.write(new Date().getFullYear())</script> Verstegen.app | Designed & Build with love by Kyle Chart</p>
