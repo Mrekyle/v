@@ -83,10 +83,14 @@
                 <p class=""> &copy; <script>document.write(new Date().getFullYear())</script> Verstegen.app | Designed & Build with love by Kyle Chart</p>
             </div>
         {% endif %}
+        
+        {% block post_js %}
+            <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
+        {% endblock %}
 
-        {% block postloadjs %}
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        {% block postLoadJS %}
+
         {% endblock %}
 
     </body>

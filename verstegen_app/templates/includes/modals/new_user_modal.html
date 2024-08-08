@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="modal" id="createUserModal">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title">Add new User</h4>
+              <button type="button" class="btn-close" id="cancelNew" data-bs-dismiss="model" aria-label="close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Add a new user</p>
+              <form method="post" action="">
+                  {% csrf_token %}
+                  {{ new_user.as_p }}
+                  <button type="submit" class="btn btn-success mb-2">Create New User</button>
+              </form>
+              <div class="modal-footer">
+                <button type="button" id="cancelNew" class="btn btn-danger" data-bs-dismiss="model">Cancel</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <p>{{ user.username }}</p>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-success" id="editUserButton">Edit</button>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-danger" id="deleteUserButton">Delete</button>
+        </div>
+    </div>
+</div>
+{% include 'includes/modals/edit_user_modal.html' %}
+{% include 'includes/modals/delete_user_modal.html' %}
+{% endblock %}
+
+{% block postLoadJS %}
+<script type="text/javascript">
+      // Trigger delete modal
+    document.getElementById('deleteUserButton').addEventListener('click', function() {
+        document.getElementById('deleteUserModal').style.display = 'block';
+        });
+        
+    document.getElementById('cancelDelete').addEventListener('click', function() {
+        document.getElementById('deleteUserModal').style.display = 'none';
+    });
+    
+    // Trigger edit modal
+    document.getElementById('editUserButton').addEventListener('click', function() {
+        document.getElementById('editUserModal').style.display = 'block';
+     });
+
+    document.getElementById('cancelEdit').addEventListener('click', function() {
+        document.getElementById('editUserModal').style.display = 'none';
+    });
+    
+    // JavaScript to close the modals when the user clicks outside of them
+    window.addEventListener('click', function(event) {
+        var deleteUserModal = document.getElementById('deleteUserModal');
+        if (event.target == deleteUserModal) {
+            deleteUserModal.style.display = 'none';
+        } else if (event.target == editUserModal) {
+            editUserModal.style.display = 'none';
+        };
+    });
+</script>
+{% endblock %}

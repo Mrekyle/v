@@ -74,7 +74,7 @@ class CreateCustomUser(UserCreationForm):
         return user
     
 
-class UserProfileForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ('first_name', 'last_name', 'email')
+class UserProfileForm(UserCreationForm):
+    
+    username = forms.CharField(label='Username', min_length=2, max_length=150)
+    email = forms.EmailField(label='Email')

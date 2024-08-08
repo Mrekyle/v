@@ -18,7 +18,7 @@ def user_manager(request):
 
     users = User.objects.all()
     user_count = users.count()
-    form = CreateCustomUser()
+    new_user = CreateCustomUser()
 
     role_selection = request.POST.get('role')
     username = request.POST.get(str('username'))
@@ -30,12 +30,16 @@ def user_manager(request):
         '4': {'role': User.USER, 'group': 'User'},
     }
 
+
+    """
+        Manual User role selection
+    """
     if request.method == 'POST':
-        form = CreateCustomUser(request.POST)
+        new_user = CreateCustomUser(request.POST)
         if role_selection in roles:
             role_data = roles[role_selection] 
-            if form.is_valid():
-                user = form.save(commit=False)
+            if new_user.is_valid():
+                user = new_user.save(commit=False)
                 user.role = role_data['role'] 
                 user.is_active = True
                 user.save()
@@ -48,18 +52,51 @@ def user_manager(request):
         else:
             messages.error(request, f'Oops.. Something went wrong, Please take another look \
                            and try again.')       
+    else:
+        new_user = CreateCustomUser()
             
     template = 'user-admin.html'
     context = {
-        'form': form,
+        'new_user': new_user,
         'users': users,
         'count': user_count,
     }
 
     return render(request, template, context)
 
-@login_required(login_url='landing')
 
+@login_required(login_url='landing')
+def user_profile_admin(request, user_id):
+    """
+    Allows the admin to pull up the suers information and edit the user
+    """
+    
+    user = get_object_or_404(User, id=user_id)
+    edit_form = UserProfileForm(instance=user)
+
+    if request.method == 'POST':
+        edit_form = UserProfileForm(request.POST, instance=user)
+
+        if edit_form.is_valid():
+            edit_form.save()
+            messages.success(request, f'User {user.username} was successfully updated')
+            return redirect('user_admin')
+        else:
+            messages.error(request, f'Something went wrong. Please check the form and try again.')
+    else:
+        edit_form = UserProfileForm(instance=user)
+        messages.info(request, f'You are currently editing user profile: {user.username}')
+
+
+    template = 'user_edit.html'
+    context ={
+        'edit_user': edit_form,
+        'user': user,
+    }
+    return render(request, template, context)
+
+
+@login_required(login_url='landing')
 def user_delete(request, user_id):
     """
         Allows the Admin to delete the users
@@ -70,42 +107,18 @@ def user_delete(request, user_id):
     messages.success(request, f'User {user.username} was successfully deleted')
     return redirect(reverse('user_admin'))
 
-# def edit_user(request, user_id):
-#     user = User.objects.get(pk=user_id)
-#     if request.method == 'POST':
-#         form = UserProfileForm(request.POST, instance=user)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('user_profile', pk=user_id)
-#     else:
-#         form = UserProfileForm(instance=user)
-#     return render(request, 'edit_user_profile.html', {'form': form})
+@login_required(login_url='landing')
+def delete_user_modal(request, user_id):
+    """
+        User delete modal
+    """
+    user = User.objects.get(id=user_id)
+    return render(request, 'delete_user_modal.html', {'user': user})
 
 @login_required(login_url='landing')
-def user_edit(request, user_id):
+def user_edit_modal(request, user_id):
     """
-    Allows the Staff to edit the users 
+        User edit modal
     """
-
-    user = get_object_or_404(User, id=user_id)
-    form = UserProfileForm(instance=user)
-
-    if request.method == 'POST':
-        form = UserProfileForm(request.POST, instance=user)
-
-        if form.is_valid():
-            form.save()
-            messages.success(request, f'User {user.username} was successfully updated')
-            return redirect('user_admin')
-        else:
-            messages.error(request, f'Something went wrong. Please check the form and try again.')
-    else:
-        form = UserProfileForm(instance=user)
-        messages.info(request, f'You are currently editing user profile: {user.username}')
-
-    template = 'user-admin.html'
-    context = {
-        'edit_form': form,
-        'user': user,
-    }
-    return render(request, template, context)
+    user = User.objects.get(id=user_id)
+    return render(request, 'edit_user_modal.html', {'user': user})
