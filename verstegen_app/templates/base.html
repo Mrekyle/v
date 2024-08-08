@@ -1,5 +1,7 @@
 {% load static %}
-
+{% load humanize %}
+{% load has_group %}
+ 
 <!DOCTYPE html>
 <html lang="en-us">
     <head>
@@ -66,11 +68,17 @@
     
                         {% endblock %}
                     {% else %}
-                        {% block content %}
-                            NAVIGATION PANEL
-                            <p class=""> &copy; <script>document.write(new Date().getFullYear())</script> Verstegen.app | Designed & built with love by Kyle Chart</p>
-                        {% endblock %}
-
+                        {% if user.is_authenticated %}  
+                            {% if user|has_group:"Admin" %}
+                                <p>Welcome, Admin! I am logged in</p>
+                            {% else %}
+                                <p>Welcome, User!</p>
+                            {% endif %}
+                            {% block content %}
+                                NAVIGATION PANEL
+                                <p class=""> &copy; <script>document.write(new Date().getFullYear())</script> Verstegen.app | Designed & built with love by Kyle Chart</p>
+                            {% endblock %}
+                        {% endif %}
                     {% endif %}
                 </div>
             </section>

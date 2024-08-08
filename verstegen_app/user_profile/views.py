@@ -66,6 +66,7 @@ def user_manager(request):
 
 
 @login_required(login_url='landing')
+@allowed_users(allowed_roles=['Admin'])
 def user_profile_admin(request, user_id):
     """
     Allows the admin to pull up the suers information and edit the user
